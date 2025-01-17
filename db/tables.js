@@ -56,6 +56,10 @@ buyer_id INTEGER
   await pool.query(sql);
   console.log("here");
 }
+<<<<<<< HEAD
+=======
+farmer_crop_table();
+>>>>>>> 07e3dad (setting up the database schem)
 async function farmer_crop_table() {
   let sql = `
 
