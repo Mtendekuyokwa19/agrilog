@@ -46,4 +46,22 @@ async function getcropsinarea(areaName) {
   console.log(rows);
   return rows;
 }
-getcropsinarea("mzuzu");
+
+async function getbuyersinarea(areaName) {
+  let { rows } = await pool.query(
+    "SELECT DISTINCT buyers.username FROM buyers JOIN area_of_operation ON buyers.area_of_operation_id=area_of_operation.id  WHERE $1 = area_of_operation.area_name OR $1=area_of_operation.district   ",
+    [areaName.toLowerCase()],
+  );
+  console.log(rows);
+  return rows;
+}
+//FIX: this returns the wrong data
+async function getbuyerscrop(cropName) {
+  let { rows } = await pool.query(
+    "SELECT buyers.username ,crop_name FROM buyers JOIN buyer_crop ON buyers.id=buyer_crop.buyer_id JOIN crop ON crop.id=buyer_crop.crop_id  WHERE $1 = crop_name ",
+    [cropName.toLowerCase()],
+  );
+  console.log(rows);
+  return rows;
+}
+getbuyerscrop("maize");
