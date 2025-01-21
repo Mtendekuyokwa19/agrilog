@@ -64,4 +64,24 @@ async function getbuyerscrop(cropName) {
   console.log(rows);
   return rows;
 }
-getbuyerscrop("maize");
+async function getnumberoffarmers() {
+  let { rows } = await pool.query("SELECT COUNT(username)  FROM farmers");
+  console.log(rows);
+  return rows[0].count;
+}
+
+async function getnumberofbuyers() {
+  let { rows } = await pool.query("SELECT COUNT(username)  FROM buyers");
+  console.log(rows);
+  return rows[0].count;
+}
+async function getnumberofcrops() {
+  let { rows } = await pool.query("SELECT COUNT(crop_name)  FROM crop");
+  console.log(rows);
+  return rows[0].count;
+}
+module.exports = {
+  getnumberoffarmers,
+  getnumberofcrops,
+  getnumberofbuyers,
+};
