@@ -6,22 +6,31 @@ const {
   getnumberoffarmers,
   getnumberofcrops,
 } = require("../controller/get");
+
 router.get("/", (req, res) => {
-  try {
-    Promise.all([
-      getnumberoffarmers(),
-      getnumberofbuyers(),
-      getnumberofcrops(),
-    ]).then((values) => {
+
       res.render("index", {
-        numberOfCrops: values[0],
+        numberOfCrops: 100,
 
-        numberOfbuyers: values[1],
+        numberOfbuyers:89, 
 
-        numberOfFarmers: values[2],
+        numberOfFarmers: 223,
       });
-    });
-  } catch (error) {}
+  // try {
+  //   Promise.all([
+  //     getnumberoffarmers(),
+  //     getnumberofbuyers(),
+  //     getnumberofcrops(),
+  //   ]).then((values) => {
+  //     res.render("index", {
+  //       numberOfCrops: values[0],
+  //
+  //       numberOfbuyers: values[1],
+  //
+  //       numberOfFarmers: values[2],
+  //     });
+  //   });
+  // } catch (error) {}
 });
 
 module.exports = {
