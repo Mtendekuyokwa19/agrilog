@@ -56,10 +56,7 @@ buyer_id INTEGER
   await pool.query(sql);
   console.log("here");
 }
-<<<<<<< HEAD
-=======
 farmer_crop_table();
->>>>>>> 07e3dad (setting up the database schem)
 async function farmer_crop_table() {
   let sql = `
 
@@ -87,4 +84,19 @@ area_of_operation_id INTEGER
     `;
   await pool.query(sql);
   console.log("here");
+}
+
+async function AIconv() {
+  let sql = `
+
+CREATE TABLE IF NOT EXISTS ai_conversation (id INTEGER PRIMARY KEY
+GENERATED ALWAYS AS IDENTITY,
+usermessage VARCHAR(255),
+
+ai_response VARCHAR(255)
+
+
+);
+    `;
+  await pool.query(sql);
 }
