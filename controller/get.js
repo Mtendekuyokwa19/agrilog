@@ -80,8 +80,18 @@ async function getnumberofcrops() {
   console.log(rows);
   return rows[0].count;
 }
+
+async function getallfarmersFortable() {
+  let { rows } = await pool.query(
+    "SELECT *  FROM farmers JOIN crop ON farmers.crop_of_interest_id=crop.id JOIN area_of_operation ON farmers.area_of_operation_id=area_of_operation.id",
+  );
+  console.log(rows);
+  return rows;
+}
 module.exports = {
   getnumberoffarmers,
   getnumberofcrops,
   getnumberofbuyers,
+  getallcrops,
+  getallfarmersFortable,
 };

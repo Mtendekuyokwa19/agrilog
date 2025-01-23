@@ -5,32 +5,32 @@ const {
   getnumberofbuyers,
   getnumberoffarmers,
   getnumberofcrops,
+  getallcrops,
+  getallfarmersFortable,
 } = require("../controller/get");
 
 router.get("/", (req, res) => {
-
+  try {
+    Promise.all([
+      getnumberoffarmers(),
+      getnumberofbuyers(),
+      getnumberofcrops(),
+      getallcrops(),
+      getallfarmersFortable(),
+    ]).then((values) => {
       res.render("index", {
-        numberOfCrops: 100,
+        numberOfCrops: values[0],
 
-        numberOfbuyers:89, 
+        numberOfbuyers: values[1],
 
-        numberOfFarmers: 223,
+        numberOfFarmers: values[2],
+        allcrops: values[3],
+        allfarmers: values[4],
       });
-  // try {
-  //   Promise.all([
-  //     getnumberoffarmers(),
-  //     getnumberofbuyers(),
-  //     getnumberofcrops(),
-  //   ]).then((values) => {
-  //     res.render("index", {
-  //       numberOfCrops: values[0],
-  //
-  //       numberOfbuyers: values[1],
-  //
-  //       numberOfFarmers: values[2],
-  //     });
-  //   });
-  // } catch (error) {}
+    });
+  } catch (error) {
+    console.error("failed to get");
+  }
 });
 
 module.exports = {

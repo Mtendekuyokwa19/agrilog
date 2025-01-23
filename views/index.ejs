@@ -21,24 +21,24 @@
 <p class="col-start-3">crop </p>
 <p class="col-start-4">area</p>
 <p class="col-start-5">district</p>
-<p class="col-start-6">country</p>
+<p class="col-start-6">Phone </p>
 <p class="col-start-7">amount (kgs)</p>
 
 
       </div>
+
   <div class="grid rounded-md p-2 text-sm grid-cols-7 grid-rows-1 
         text-white ">
-    <%-include("index/farmers")%>
 
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
-    <%-include("index/farmers")%>
+        <%  
+
+        allfarmers.forEach((farmer=>{ %>
+
+
+        <%-include("index/farmers",{number:1,username:farmer.username,crop_name:farmer.crop_name,district:farmer.district,area_name:farmer.area_name,phone_number:farmer.phone_number})%>
+                   <%   })) %>
+
+           <%-include("index/addfarmer")   %>
   </div>
   </div>
   <div class="col-start-2 row-start-1 col-span-3 flex p-4">
@@ -49,16 +49,13 @@
 
 <p class="text-slate-50 text-lg font-bold">All crops</p>
   <div class="flex
-      items-center justify-center gap-2  ">
+      items-center jusfify-start gap-2  ">
+        <%allcrops.forEach((crop)=>{      %>
 
-      <%-include("index/crops",{cropname:"maize"})%>
+      <%-include("index/crops",{cropname:crop.crop_name})%>
 
-      <%-include("index/crops",{cropname:"maize"})%>
-      <%-include("index/crops",{cropname:"maize"})%>
-
-      <%-include("index/crops",{cropname:"maize"})%>
-      <%-include("index/crops",{cropname:"maize"})%>
-      <%-include("index/crops",{cropname:"maize"})%>
+                   <%  })  %>
+        <%-include("index/addcategory.ejs")%>
   </div>
     </div>
 
