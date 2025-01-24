@@ -32,7 +32,9 @@ router.get("/", (req, res) => {
     console.error("failed to get");
   }
 });
-
+router.get("/newcrop", (req, res) => {
+  res.render("newcrop");
+});
 module.exports = {
   router,
 };

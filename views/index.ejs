@@ -52,7 +52,7 @@
       items-center jusfify-start gap-2  ">
         <%allcrops.forEach((crop)=>{      %>
 
-      <%-include("index/crops",{cropname:crop.crop_name})%>
+      <%-include("index/crops",{cropname:crop.crop_name,cropimage:crop.crop_image})%>
 
                    <%  })  %>
         <%-include("index/addcategory.ejs")%>

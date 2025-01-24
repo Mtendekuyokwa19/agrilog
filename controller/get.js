@@ -1,7 +1,7 @@
 const pool = require("../db/pool");
 
 async function getallcrops() {
-  let { rows } = await pool.query("SELECT crop_name FROM crop");
+  let { rows } = await pool.query("SELECT crop_name,crop_image FROM crop");
   return rows;
 }
 async function getallfarmers() {

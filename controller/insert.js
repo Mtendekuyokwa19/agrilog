@@ -29,22 +29,32 @@ async function addAreaOfOperation(district, area_name) {
   );
 }
 async function addCrop(cropname) {
-  await pool.query(
-    "INSERT INTO crop (crop_name) VALUES ($1);    ",
-    [cropname],
-  );
+  await pool.query("INSERT INTO crop (crop_name) VALUES ($1);    ", [cropname]);
 }
 
 async function buyer_crop(crop_id, buyer_id) {
-  await pool.query(
-    "INSERT INTO crop (crop_id,buyer_id) VALUES ($1,$2);    ",
-    [crop_id, buyer_id],
-  );
+  await pool.query("INSERT INTO crop (crop_id,buyer_id) VALUES ($1,$2);    ", [
+    crop_id,
+    buyer_id,
+  ]);
 }
 
 async function farmer_crop(crop_id, farmer_id) {
+  await pool.query("INSERT INTO crop (crop_id,farmer_id) VALUES ($1,$2);    ", [
+    crop_id,
+    farmer_id,
+  ]);
+}
+async function adduserText(text) {
   await pool.query(
-    "INSERT INTO crop (crop_id,farmer_id) VALUES ($1,$2);    ",
-    [crop_id, farmer_id],
+    "INSERT INTO ai_conversation (usermessage) VALUES ($1);    ",
+    [text],
+  );
+}
+
+async function addairesponse(text) {
+  await pool.query(
+    "INSERT INTO ai_conversation (ai_response) VALUES ($1);    ",
+    [text],
   );
 }
