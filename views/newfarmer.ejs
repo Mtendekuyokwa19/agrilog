@@ -10,23 +10,36 @@
 </head>
 
 <body class=" bg-slate-900 gap-2 h-screen flex items-center justify-center  ">
-<form action="/newcrop" class="w-1/2 flex-col flex 
+<form action="/newfarmer" class="w-1/2 flex-col flex 
 justify-center   bg-slate-700 rounded-md
 text-slate-200 p-8 gap-2" method="POST">
-
+<p><%=error%></p>
 <label>Farmer name</label>
-<input type="text" name="crop_name" class="rounded">
+<input type="text"  name="username" class="text-slate-700 rounded">
 
 <label>phone number</label>
-<input type="text" name="crop_name" class="rounded">
+<input type="text" name="phone_number" class="rounded text-slate-700">
+
+<label>crop of interest</label>
+<select id="crop_name" name="crop_name" class="text-slate-700">
+<%croplist.forEach((crop)=>{%>
+
+<option value=<%=crop.crop_name%> class="text-slate-700"> <%=crop.crop_name%>
+</option>
+
+<%})%>
+</select>
 
 <label>Area of operation</label>
-<input type="text" name="crop_name" class="rounded">
-<label>crop of interest</label>
-<input name="image_link" type="url" class="rounded">
+<select id="area_name" name="area_name" class="text-slate-700">
+<%arealist.forEach((area)=>{%>
 
+<option value=<%=area.district%> class="text-slate-700"> <%=area.district%></option>
+
+<%})%>
+</select>
 <label>password</label>
-<input type="password" class="rounded" name="password">
+<input type="password" class="rounded text-slate-700" name="password" >
 
 <button type="submit" class="bg-green-700 w-1/2">Submit</button>
 </form>

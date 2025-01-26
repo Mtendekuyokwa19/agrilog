@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { addCrop, addAreaOfOperation } = require("../controller/insert");
+const { addCrop, addAreaOfOperation, addFarmerWithid } = require("../controller/insert");
 const { body, validationResult } = require("express-validator");
 let router = Router();
 let d3 = require("d3");
@@ -13,6 +13,8 @@ const {
   getpassword,
   getcroplist,
   getcropidbyname,
+  getareaidbyname,
+  getallplaces,
 } = require("../controller/get");
 
 router.get("/", (req, res) => {
@@ -47,12 +49,12 @@ router.get("/newfarmer", (req, res) => {
     Promise.all([
       getcroplist()
 
+      , getallplaces()
+
+    ]).then((value) => {
 
 
-    ]).then(() => {
-
-
-      res.render("newfarmer", { croplist: value[0] });
+      res.render("newfarmer", { croplist: value[0], error: "", arealist: value[1] });
 
 
     })
@@ -65,24 +67,44 @@ router.get("/newfarmer", (req, res) => {
   }
 });
 router.post("/newfarmer", (req, res) => {
-  Promise.all([
-    getcropidbyname(req.body.crop_name),
-
-    addAreaOfOperation(req.body.area_name, "global")
-  ])
-    .then((value) => {
-
-    }).then(() => {
+  getpassword().then((password) => {
+    if (password[0].password == req.body.password) {
 
 
-    })
+      Promise.all([
+        getcropidbyname(req.body.crop_name),
+
+        getareaidbyname(req.body.area_name)
+
+      ])
+        .then((value) => {
+          addFarmerWithid(req.body.username, (value[0][0].id), parseInt(req.body.phone_number), (value[1][0].id))
+          res.redirect("/")
+        })
+
+    }
+    else {
+
+      getcroplist().then((value) => {
+
+
+        res.render("newfarmer", { croplist: value, error: "wrong password" })
+
+      })
+
+    }
+
+  })
+
+
+
+
 
 
 
 
 })
 router.post("/newcrop", (req, res) => {
-  console.log(req);
   getpassword().then((value) => {
     if (value[0].password === req.body.password) {
 

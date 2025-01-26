@@ -26,7 +26,6 @@ async function removeBuyerOfCrop(crop_name) {
     "DELETE   FROM buyers JOIN buyer_crop ON buyers.id= buyer_crop.buyer_id JOIN crop ON buyer_crop.crop_id = crop.id   WHERE  crop.crop_name= $1 ;",
     [crop_name],
   );
-  console.log(rows);
 }
 //TODO: removefarmerOfcrop
 //TODO: removefarmerOfcrop

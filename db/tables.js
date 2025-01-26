@@ -14,7 +14,6 @@ area_of_operation_id INTEGER
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 async function area_of_operation() {
   let sql = `
@@ -28,7 +27,6 @@ area_name VARCHAR(255)
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 async function crop() {
   let sql = `
@@ -41,7 +39,6 @@ crop_name VARCHAR(255)
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 crop();
 async function buyer_crop_table() {
@@ -54,7 +51,6 @@ buyer_id INTEGER
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 farmer_crop_table();
 async function farmer_crop_table() {
@@ -67,7 +63,6 @@ farmer_id INTEGER
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 async function buyerTables() {
   let sql = `
@@ -83,7 +78,6 @@ area_of_operation_id INTEGER
 );
     `;
   await pool.query(sql);
-  console.log("here");
 }
 
 async function AIconv() {

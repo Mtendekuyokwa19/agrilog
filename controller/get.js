@@ -6,7 +6,6 @@ async function getallcrops() {
 }
 async function getallfarmers() {
   let { rows } = await pool.query("SELECT username  FROM farmers");
-  console.log(rows);
   return rows;
 }
 async function getallbuyers() {
@@ -14,15 +13,21 @@ async function getallbuyers() {
   return rows;
 }
 
-
+async function getareaidbyname(area) {
+  let { rows } = await pool.query(
+    "SELECT DISTINCT id FROM area_of_operation WHERE $1=district",
+    [area],
+  );
+  return rows;
+}
 async function getFarmersforCrop(cropname) {
   let { rows } = await pool.query(
     "SELECT farmers.username ,crop_name FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  WHERE $1 = crop.crop_name ",
     [cropname.toLowerCase()],
   );
-  console.log(rows);
   return rows;
 }
+
 async function getCropforFarmers(farmerName) {
   let { rows } = await pool.query(
     "SELECT farmers.username ,crop_name FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  WHERE $1 = farmer.username ",
@@ -35,7 +40,6 @@ async function getfarmersinarea(areaName) {
     "SELECT farmers.username FROM farmers JOIN area_of_operation ON area_of_operation_id=farmers.area_of_operation_id  WHERE $1 = area_of_operation.area_name OR $1=area_of_operation.district   ",
     [areaName.toLowerCase()],
   );
-  console.log(rows);
   return rows;
 }
 
@@ -44,7 +48,6 @@ async function getcropsinarea(areaName) {
     "SELECT DISTINCT crop.crop_name FROM crop JOIN farmers ON farmers.crop_of_interest_id=crop.id JOIN area_of_operation ON area_of_operation_id=farmers.area_of_operation_id  WHERE $1 = area_of_operation.area_name OR $1=area_of_operation.district   ",
     [areaName.toLowerCase()],
   );
-  console.log(rows);
   return rows;
 }
 
@@ -53,7 +56,6 @@ async function getbuyersinarea(areaName) {
     "SELECT DISTINCT buyers.username FROM buyers JOIN area_of_operation ON buyers.area_of_operation_id=area_of_operation.id  WHERE $1 = area_of_operation.area_name OR $1=area_of_operation.district   ",
     [areaName.toLowerCase()],
   );
-  console.log(rows);
   return rows;
 }
 //FIX: this returns the wrong data
@@ -62,7 +64,6 @@ async function getbuyerscrop(cropName) {
     "SELECT buyers.username ,crop_name FROM buyers JOIN buyer_crop ON buyers.id=buyer_crop.buyer_id JOIN crop ON crop.id=buyer_crop.crop_id  WHERE $1 = crop_name ",
     [cropName.toLowerCase()],
   );
-  console.log(rows);
   return rows;
 }
 async function getcroplist() {
@@ -90,14 +91,19 @@ async function getallfarmersFortable() {
     "SELECT *  FROM farmers JOIN crop ON farmers.crop_of_interest_id=crop.id JOIN area_of_operation ON farmers.area_of_operation_id=area_of_operation.id",
   );
 
-  console.log("here", rows);
   return rows;
 }
 async function getcropidbyname(crop_name) {
 
   let { rows } = await pool.query("SELECT id  FROM crop WHERE $1=crop_name ", [crop_name]);
+
   return rows;
 
+}
+async function getallplaces() {
+
+  let { rows } = await pool.query("SELECT district  FROM area_of_operation ",);
+  return rows
 }
 async function getpassword() {
   let { rows } = await pool.query("SELECT *  FROM password ");
@@ -108,9 +114,11 @@ module.exports = {
   getnumberofcrops,
   getnumberofbuyers,
   getallcrops,
-
+  getareaidbyname,
   getallfarmersFortable,
   getpassword,
   getcroplist,
-  getcropidbyname
-};
+  getcropidbyname,
+  getallplaces
+
+}
