@@ -28,8 +28,8 @@ async function addAreaOfOperation(district, area_name) {
     [district, area_name],
   );
 }
-async function addCrop(cropname) {
-  await pool.query("INSERT INTO crop (crop_name) VALUES ($1);    ", [cropname]);
+async function addCrop(cropname, imglink) {
+  await pool.query("INSERT INTO crop (crop_name,crop_image) VALUES ($1,$2);    ", [cropname, imglink]);
 }
 
 async function buyer_crop(crop_id, buyer_id) {
@@ -52,9 +52,18 @@ async function adduserText(text) {
   );
 }
 
+async function newpassword(text) {
+  await pool.query("INSERT INTO password (password) VALUES ($1);    ", [text]);
+}
 async function addairesponse(text) {
   await pool.query(
     "INSERT INTO ai_conversation (ai_response) VALUES ($1);    ",
     [text],
   );
+}
+module.exports = {
+  addCrop,
+  addFarmerWithid,
+  addAreaOfOperation
+
 }

@@ -100,3 +100,18 @@ ai_response VARCHAR(255)
     `;
   await pool.query(sql);
 }
+
+async function password() {
+  let sql = `
+
+CREATE TABLE IF NOT EXISTS password (id INTEGER PRIMARY KEY
+GENERATED ALWAYS AS IDENTITY,
+password VARCHAR(255)
+
+
+
+);
+    `;
+  await pool.query(sql);
+}
+password();
