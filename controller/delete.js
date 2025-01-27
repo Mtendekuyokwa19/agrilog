@@ -5,7 +5,6 @@ async function removeFarmer(username, phone_number) {
     [username, phone_number],
   );
 }
-removeFarmer("jack", 99999999);
 
 async function removeBuyer(username, phone_number) {
   await pool.query(
@@ -13,7 +12,14 @@ async function removeBuyer(username, phone_number) {
     [username, phone_number],
   );
 }
+async function clearfarmers() {
 
+  await pool.query(
+    "DELETE FROM farmers ",
+  );
+
+}
+clearfarmers()
 async function removeCrop(crop) {
   await pool.query(
     "DELETE FROM crop WHERE crop_name = $1 ;",
@@ -27,6 +33,13 @@ async function removeBuyerOfCrop(crop_name) {
     [crop_name],
   );
 }
+
+async function removeFarmercrop() {
+  let { rows } = await pool.query(
+    "DELETE   FROM farmer_crop  ;",
+  );
+}
+removeFarmercrop()
 //TODO: removefarmerOfcrop
 //TODO: removefarmerOfcrop
 //TODO: removefarmerOfarea

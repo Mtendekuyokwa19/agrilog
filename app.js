@@ -9,4 +9,8 @@ app.use("/", router);
 app.use("/newcrop", router);
 
 app.use("/newfarmer", router);
-app.listen(8004);
+
+app.use("/crop/:crop", router);
+
+app.use("/farmer/:username", router);
+app.listen(8006);

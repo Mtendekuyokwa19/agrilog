@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { addCrop, addAreaOfOperation, addFarmerWithid } = require("../controller/insert");
+const { addCrop, addAreaOfOperation, addFarmerWithid, farmer_crop } = require("../controller/insert");
 const { body, validationResult } = require("express-validator");
 let router = Router();
 let d3 = require("d3");
@@ -15,6 +15,9 @@ const {
   getcropidbyname,
   getareaidbyname,
   getallplaces,
+  getFarmersforCrop,
+  getfarmerid,
+  getFarmerbyusername,
 } = require("../controller/get");
 
 router.get("/", (req, res) => {
@@ -41,6 +44,7 @@ router.get("/", (req, res) => {
   }
 });
 router.get("/newcrop", (req, res) => {
+
   res.render("newcrop", { error: "" });
 });
 
@@ -66,6 +70,29 @@ router.get("/newfarmer", (req, res) => {
 
   }
 });
+router.get("/crop/:crop", (req, res) => {
+
+  getFarmersforCrop(req.params.crop).then((farmerlist) => {
+
+    console.log(req.params.crop.toString())
+    res.render("specificcrop.ejs", { allfarmers: farmerlist })
+
+
+  })
+
+})
+
+router.get("/farmer/:username", (req, res) => {
+
+  getFarmerbyusername(req.params.username).then((farmer_details) => {
+
+    console.log(farmer_details)
+    res.render("updatefarmer.ejs", { farmer_details: farmer_details })
+
+
+  })
+
+})
 router.post("/newfarmer", (req, res) => {
   getpassword().then((password) => {
     if (password[0].password == req.body.password) {
@@ -78,7 +105,15 @@ router.post("/newfarmer", (req, res) => {
 
       ])
         .then((value) => {
-          addFarmerWithid(req.body.username, (value[0][0].id), parseInt(req.body.phone_number), (value[1][0].id))
+          addFarmerWithid(req.body.username, (value[0][0].id), parseInt(req.body.phone_number), (value[1][0].id)).then(() => {
+            getfarmerid(req.body.username).then((id) => {
+
+              console.log(id)
+
+              farmer_crop(value[0][0].id, id[0].id)
+            })
+
+          })
           res.redirect("/")
         })
 

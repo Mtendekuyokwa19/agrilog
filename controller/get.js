@@ -22,12 +22,21 @@ async function getareaidbyname(area) {
 }
 async function getFarmersforCrop(cropname) {
   let { rows } = await pool.query(
-    "SELECT farmers.username ,crop_name FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  WHERE $1 = crop.crop_name ",
-    [cropname.toLowerCase()],
+    "SELECT * FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  JOIN area_of_operation ON area_of_operation_id=area_of_operation.id WHERE crop.crop_name = $1",
+    [cropname.toString()]
   );
   return rows;
 }
+async function getFarmerbyusername(username) {
 
+  let { rows } = await pool.query(
+    "SELECT * FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  JOIN area_of_operation ON area_of_operation_id=area_of_operation.id WHERE farmers.username= $1",
+    [username.toString()]
+  );
+  return rows;
+
+
+}
 async function getCropforFarmers(farmerName) {
   let { rows } = await pool.query(
     "SELECT farmers.username ,crop_name FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  WHERE $1 = farmer.username ",
@@ -76,6 +85,13 @@ async function getnumberoffarmers() {
   let { rows } = await pool.query("SELECT COUNT(username)  FROM farmers");
   return rows[0].count;
 }
+async function getfarmerid(username) {
+
+  let { rows } = await pool.query("SELECT id FROM farmers WHERE $1=username", [username]);
+  return rows
+
+
+}
 
 async function getnumberofbuyers() {
   let { rows } = await pool.query("SELECT COUNT(username)  FROM buyers");
@@ -100,6 +116,7 @@ async function getcropidbyname(crop_name) {
   return rows;
 
 }
+
 async function getallplaces() {
 
   let { rows } = await pool.query("SELECT district  FROM area_of_operation ",);
@@ -120,5 +137,7 @@ module.exports = {
   getcroplist,
   getcropidbyname,
   getallplaces
-
+  , getFarmersforCrop
+  , getfarmerid
+  , getFarmerbyusername
 }

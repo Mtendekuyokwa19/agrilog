@@ -40,7 +40,7 @@ async function buyer_crop(crop_id, buyer_id) {
 }
 
 async function farmer_crop(crop_id, farmer_id) {
-  await pool.query("INSERT INTO crop (crop_id,farmer_id) VALUES ($1,$2);    ", [
+  await pool.query("INSERT INTO farmer_crop (crop_id,farmer_id) VALUES ($1,$2);    ", [
     crop_id,
     farmer_id,
   ]);
@@ -64,6 +64,7 @@ async function addairesponse(text) {
 module.exports = {
   addCrop,
   addFarmerWithid,
-  addAreaOfOperation
+  farmer_crop
+  , addAreaOfOperation
 
 }
