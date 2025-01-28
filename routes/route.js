@@ -83,14 +83,20 @@ router.get("/crop/:crop", (req, res) => {
 })
 
 router.get("/farmer/:username", (req, res) => {
+  Promise.all([
+    getFarmerbyusername(req.params.username),
 
-  getFarmerbyusername(req.params.username).then((farmer_details) => {
+    getallcrops(),
+    getallplaces()
 
-    console.log(farmer_details)
-    res.render("updatefarmer.ejs", { farmer_details: farmer_details })
+  ])
+    .then((value) => {
+
+      console.log("inside", value[0][0])
+      res.render("updatefarmer.ejs", { arealist: value[2], error: "", farmer_details: value[0][0], croplist: value[1] })
 
 
-  })
+    })
 
 })
 router.post("/newfarmer", (req, res) => {
