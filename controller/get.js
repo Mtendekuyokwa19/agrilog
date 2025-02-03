@@ -12,6 +12,11 @@ async function getallbuyers() {
   let { rows } = await pool.query("SELECT username FROM buyers");
   return rows;
 }
+async function getcropbyname(crop_name) {
+  let { rows } = await pool.query("SELECT * FROM crop WHERE crop_name=$1", [crop_name])
+  return rows
+
+}
 
 async function getareaidbyname(area) {
   let { rows } = await pool.query(
@@ -139,5 +144,7 @@ module.exports = {
   getallplaces
   , getFarmersforCrop
   , getfarmerid
-  , getFarmerbyusername
+  , getFarmerbyusername,
+  getcropbyname
 }
+

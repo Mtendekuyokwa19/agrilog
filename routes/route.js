@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 let router = Router();
 let d3 = require("d3");
 const {
-  getnumberofbuyers,
+  getnumberofbuyers, getcropbyname,
   getnumberoffarmers,
   getnumberofcrops,
   getallcrops,
@@ -19,7 +19,7 @@ const {
   getfarmerid,
   getFarmerbyusername,
 } = require("../controller/get");
-const { changeFarmerdetails } = require("../controller/update");
+const { changeFarmerdetails, updateCropDetail } = require("../controller/update");
 
 router.get("/", (req, res) => {
   try {
@@ -193,6 +193,27 @@ router.post("/farmer/:username", (req, res) => {
 
 
 })
+
+router.post("/cropup/:crop_name", (req, res) => {
+
+  getpassword().then((value) => {
+    if (value[0].password === req.body.password) {
+
+      updateCropDetail(req.body.crop_name, req.body.image_link, req.body.crop_id)
+
+
+      res.redirect("/");
+      return
+    }
+    res.render("updatecrop", { error: "wrong password" })
+  })
+});
+router.get("/cropup/:crop_name", (req, res) => {
+
+  getcropbyname(req.params.crop_name).then((value) => {
+    res.render("updatecrop", { error: "", crop: value[0] })
+  })
+});
 router.post("/newcrop", (req, res) => {
   getpassword().then((value) => {
     if (value[0].password === req.body.password) {

@@ -2,7 +2,7 @@
 
 
 
-<a href="/crop/<%=cropname%>" class="flex w-32 p-2 justify-center gap-2 items-center rounded bg-gray-800
+<div class="flex w-32 p-2 justify-center gap-2 items-center rounded bg-gray-800
 
 text-white flex-col">
 <div class="flex-1 flex items-center justify-center ">
@@ -10,11 +10,11 @@ text-white flex-col">
 </div>
 <div class="flex items-center justify-center  gap-2">
 
-<p>
+<a href="/crop/<%=cropname%>" class="text-blue-300" >
            <%=cropname   %>
 
-</p>
-
-</div>
 </a>
+<a href="/cropup/<%=cropname%>" >edit</a>
+</div>
+</div>
 
