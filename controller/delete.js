@@ -45,3 +45,6 @@ removeFarmercrop()
 //TODO: removefarmerOfarea
 //TODO: removeBuyerofarea
 //
+module.exports = {
+  removeFarmer
+}

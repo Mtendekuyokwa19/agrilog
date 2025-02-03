@@ -38,6 +38,7 @@ router.get("/", (req, res) => {
         numberOfFarmers: values[0],
         allcrops: values[3],
         allfarmers: values[4],
+        removefarmer: removefarmer
       });
     });
   } catch (error) {
