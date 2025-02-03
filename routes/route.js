@@ -19,6 +19,7 @@ const {
   getfarmerid,
   getFarmerbyusername,
 } = require("../controller/get");
+const { changeFarmerdetails } = require("../controller/update");
 
 router.get("/", (req, res) => {
   try {
@@ -92,7 +93,6 @@ router.get("/farmer/:username", (req, res) => {
   ])
     .then((value) => {
 
-      console.log("inside", value[0][0])
       res.render("updatefarmer.ejs", { arealist: value[2], error: "", farmer_details: value[0][0], croplist: value[1] })
 
 
@@ -124,6 +124,54 @@ router.post("/newfarmer", (req, res) => {
         })
 
     }
+    else {
+
+      getcroplist().then((value) => {
+
+
+        res.render("newfarmer", { croplist: value, error: "wrong password" })
+
+      })
+
+    }
+
+  })
+
+
+
+
+
+
+
+
+})
+router.post("/farmer/:username", (req, res) => {
+  getpassword().then((password) => {
+    if (password[0].password == req.body.password) {
+
+      Promise.all([
+        getcropidbyname(req.body.crop_name),
+
+        getareaidbyname(req.body.area_name),
+
+
+      ])
+        .then((value) => {
+
+          changeFarmerdetails(req.body.username, (value[0][0].id), parseInt(req.body.phone_number), value[1][0].id, req.body.farmer_id).then(() => {
+
+
+
+          })
+
+        }).finally(() => {
+
+
+          res.redirect("/")
+        })
+
+    }
+
     else {
 
       getcroplist().then((value) => {
