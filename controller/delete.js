@@ -19,6 +19,13 @@ async function clearfarmers() {
   );
 
 }
+async function removefarmer_crop(farmerid){
+
+  await pool.query(
+    "DELETE FROM farmer_crop WHERE farmer_id=$1 ",[farmerid]
+  );
+
+}
 async function removeCrop(crop) {
   await pool.query(
     "DELETE FROM crop WHERE crop_name = $1 ;",
@@ -38,12 +45,18 @@ async function removeFarmercrop() {
     "DELETE   FROM farmer_crop  ;",
   );
 }
-removeFarmercrop()
+//TODO: deleting crops
+async function removeCrop(crop_name){
+
+
+}
 //TODO: removefarmerOfcrop
 //TODO: removefarmerOfcrop
 //TODO: removefarmerOfarea
 //TODO: removeBuyerofarea
 //
+
 module.exports = {
-  removeFarmer
+  removeFarmer,
+  removefarmer_crop
 }

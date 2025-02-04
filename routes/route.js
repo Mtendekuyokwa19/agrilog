@@ -72,6 +72,53 @@ router.get("/newfarmer", (req, res) => {
 
   }
 });
+
+router.post("/cropdel/:crop",(req,res)=>{
+  getpassword().then((password) => {
+    if (password[0].password == req.body.password) {
+
+    }
+    else {
+
+
+      getFarmerbyusername(req.params.farmer).then((farmer) => {
+
+        res.render("deletefarmer", {
+          farmer_username: farmer[0].username,
+          phone_number: farmer[0].phone_number,
+          error: "wrong password"
+        })
+
+      })
+
+
+
+    }
+
+  })
+
+
+
+
+
+
+
+
+})
+
+router.get("/cropdel/:crop",(req,res)=>{
+getcropbyname(req.params.crop).then((crop)=>{
+
+res.render("deletecrop",{
+      crop_name:crop[0].crop_name,
+      error:""
+    })
+
+  })
+
+
+
+})
 router.post("/farmerdel/:farmer", (req, res) => {
   getpassword().then((password) => {
     if (password[0].password == req.body.password) {
