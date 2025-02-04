@@ -19,7 +19,6 @@ async function clearfarmers() {
   );
 
 }
-clearfarmers()
 async function removeCrop(crop) {
   await pool.query(
     "DELETE FROM crop WHERE crop_name = $1 ;",

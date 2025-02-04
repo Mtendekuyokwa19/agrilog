@@ -19,6 +19,7 @@ const {
   getfarmerid,
   getFarmerbyusername,
 } = require("../controller/get");
+const { removeFarmer, removefarmer_crop } = require("../controller/delete.js")
 const { changeFarmerdetails, updateCropDetail } = require("../controller/update");
 
 router.get("/", (req, res) => {
@@ -38,7 +39,6 @@ router.get("/", (req, res) => {
         numberOfFarmers: values[0],
         allcrops: values[3],
         allfarmers: values[4],
-        removefarmer: removefarmer
       });
     });
   } catch (error) {
@@ -72,6 +72,59 @@ router.get("/newfarmer", (req, res) => {
 
   }
 });
+router.post("/farmerdel/:farmer", (req, res) => {
+  getpassword().then((password) => {
+    if (password[0].password == req.body.password) {
+      removeFarmer(req.body.username, req.body.phone_number).then(()=>{
+
+  getFarmerbyusername(req.params.farmer).then((farmer) => {
+
+          removefarmer_crop(farmer[0].id)
+
+  })
+        res.redirect("/")
+      })
+    }
+    else {
+
+
+      getFarmerbyusername(req.params.farmer).then((farmer) => {
+
+        res.render("deletefarmer", {
+          farmer_username: farmer[0].username,
+          phone_number: farmer[0].phone_number,
+          error: "wrong password"
+        })
+
+      })
+
+
+
+    }
+
+  })
+
+
+
+
+
+
+
+
+})
+router.get("/farmerdel/:farmer", (req, res) => {
+
+  getFarmerbyusername(req.params.farmer).then((farmer) => {
+
+    res.render("deletefarmer", {
+      farmer_username: farmer[0].username,
+      phone_number: farmer[0].phone_number,
+      error: ""
+    })
+
+  })
+
+})
 router.get("/crop/:crop", (req, res) => {
 
   getFarmersforCrop(req.params.crop).then((farmerlist) => {

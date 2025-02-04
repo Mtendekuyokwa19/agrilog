@@ -35,9 +35,8 @@ async function getFarmersforCrop(cropname) {
 async function getFarmerbyusername(username) {
 
   let { rows } = await pool.query(
-    "SELECT * FROM farmers JOIN farmer_crop ON farmers.id=farmer_id JOIN crop ON crop_of_interest_id=crop.id  JOIN area_of_operation ON area_of_operation_id=area_of_operation.id WHERE farmers.username= $1",
-    [username.toString()]
-  );
+    "SELECT * FROM farmers WHERE farmers.username= $1",
+    [username]);
   return rows;
 
 
@@ -145,6 +144,7 @@ module.exports = {
   , getFarmersforCrop
   , getfarmerid
   , getFarmerbyusername,
-  getcropbyname
+  getcropbyname,
+
 }
 
