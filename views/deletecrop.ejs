@@ -11,13 +11,13 @@
 </head>
 
 <body class=" bg-slate-900 gap-2 h-screen flex items-center justify-center  ">
-<form action="/farmerdel/:farmer" class="w-1/2 flex-col flex 
+<form action="/cropdel/:crop" class="w-1/2 flex-col flex 
 justify-center   bg-slate-700 rounded-md
 text-slate-200 p-8 gap-2" method="POST">
 
 <p><%=error%></p>
 <label>Crop Name:</label>
-<input type="text" name=<%=crop_name%> name="crop_name" class="text-slate-700 rounded" readonly>
+<input type="text" name=crop_name value=<%=crop_name%> name="crop_name" class="text-slate-700 rounded" readonly>
 
 
 <label>password</label>

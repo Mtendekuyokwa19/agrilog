@@ -1,4 +1,5 @@
 let pool = require("../db/pool.js");
+const { getcropidbyname } = require("./get.js")
 async function removeFarmer(username, phone_number) {
   await pool.query(
     "DELETE FROM farmers WHERE username = $1 AND phone_number = $2;",
@@ -19,19 +20,14 @@ async function clearfarmers() {
   );
 
 }
-async function removefarmer_crop(farmerid){
+async function removefarmer_crop(farmerid) {
 
   await pool.query(
-    "DELETE FROM farmer_crop WHERE farmer_id=$1 ",[farmerid]
+    "DELETE FROM farmer_crop WHERE farmer_id=$1 ", [farmerid]
   );
 
 }
-async function removeCrop(crop) {
-  await pool.query(
-    "DELETE FROM crop WHERE crop_name = $1 ;",
-    [crop],
-  );
-}
+
 //FIX: fails to delete
 async function removeBuyerOfCrop(crop_name) {
   let { rows } = await pool.query(
@@ -45,9 +41,20 @@ async function removeFarmercrop() {
     "DELETE   FROM farmer_crop  ;",
   );
 }
-//TODO: deleting crops
-async function removeCrop(crop_name){
 
+async function cropbyid(id) { }
+async function farmers_cropbycropid(id) { }
+async function farmersbycropid(id) { }
+async function removeCrop(crop_name) {
+  getcropidbyname(crop_name).then(async (crop) => {
+    await pool.query("DELETE FROM farmers WHERE crop_of_interest_id=$1", [crop[0].id])
+
+    await pool.query("DELETE FROM farmer_crop WHERE crop_id=$1", [crop[0].id])
+
+    await pool.query("DELETE FROM crop WHERE crop.id=$1", [crop[0].id])
+
+
+  })
 
 }
 //TODO: removefarmerOfcrop
@@ -58,5 +65,6 @@ async function removeCrop(crop_name){
 
 module.exports = {
   removeFarmer,
-  removefarmer_crop
+  removefarmer_crop,
+  removeCrop
 }
