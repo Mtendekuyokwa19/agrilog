@@ -8,7 +8,7 @@ async function addFarmerWithid(
 ) {
   await pool.query(
     "INSERT INTO farmers (username,crop_of_interest_id,phone_number,area_of_operation_id) VALUES ($1,$2,$3,$4);    ",
-    [username, crop_of_interest_id, phone_number, area_of_operation_id],
+    [username.toString(), crop_of_interest_id, phone_number, area_of_operation_id],
   );
 }
 async function addBuyerWithid(

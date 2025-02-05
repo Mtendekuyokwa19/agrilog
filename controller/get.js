@@ -37,6 +37,7 @@ async function getFarmerbyusername(username) {
   let { rows } = await pool.query(
     "SELECT * FROM farmers WHERE farmers.username= $1",
     [username]);
+  console.log(rows)
   return rows;
 
 

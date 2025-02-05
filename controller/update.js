@@ -17,7 +17,7 @@ async function changeFarmerdetails(
   });
 }
 async function updateCropAssociation(newcrop, farmer_id) {
-  await pool.query("UPDATE farmer_crop crop_id=$2 WHERE farmer_id=$1", [farmer_id, newcrop])
+  await pool.query("UPDATE farmer_crop SET crop_id=$2 WHERE farmer_id=$1", [farmer_id, newcrop])
 
 }
 async function updateCropDetail(crop_name, crop_image, crop_id) {

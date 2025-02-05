@@ -11,13 +11,13 @@
 
 <body class=" bg-slate-900 gap-2 h-screen flex items-center justify-center  ">
 
-     
+
 <form action="/farmer/<%=farmer_details.username%>" class="w-1/2 flex-col flex 
 justify-center   bg-slate-700 rounded-md
 text-slate-200 p-8 gap-2" method="POST">
 <p><%=error%></p>
 
-<input type="text"  name="farmer_id" value=<%=farmer_details.farmer_id%> class="text-black rounded" readonly>
+<input type="text"  name="farmer_id" value="<%=farmer_details.id%>" class="text-black rounded" readonly>
 <label>Farmer name</label>
 
 <input type="text"  name="username" value=<%=farmer_details.username%> class="text-black rounded">

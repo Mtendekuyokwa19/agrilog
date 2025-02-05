@@ -117,12 +117,14 @@ router.get("/cropdel/:crop", (req, res) => {
 router.post("/farmerdel/:farmer", (req, res) => {
   getpassword().then((password) => {
     if (password[0].password == req.body.password) {
-      removeFarmer(req.body.username, req.body.phone_number).then(() => {
 
-        getFarmerbyusername(req.body.username).then((farmer) => {
+      getFarmerbyusername(req.params.farmer).then((farmer) => {
 
-          // removefarmer_crop(farmer[0][0].id)
-          console.log("farermer",farmer)
+        removefarmer_crop(farmer[0].id)
+        // console.log(farmer)
+        removeFarmer(req.body.username, req.body.phone_number).then(() => {
+
+
 
         })
         res.redirect("/")
@@ -172,6 +174,7 @@ router.get("/crop/:crop", (req, res) => {
 
   getFarmersforCrop(req.params.crop).then((farmerlist) => {
 
+    // console.log(req.params.crop.toString())
     res.render("specificcrop.ejs", { allfarmers: farmerlist })
 
 
@@ -210,6 +213,7 @@ router.post("/newfarmer", (req, res) => {
           addFarmerWithid(req.body.username, (value[0][0].id), parseInt(req.body.phone_number), (value[1][0].id)).then(() => {
             getfarmerid(req.body.username).then((id) => {
 
+              // console.log(id)
 
               farmer_crop(value[0][0].id, id[0].id)
             })
