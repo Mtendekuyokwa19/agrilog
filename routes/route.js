@@ -3,7 +3,6 @@ const { Router } = require("express");
 const { addCrop, addAreaOfOperation, addFarmerWithid, farmer_crop } = require("../controller/insert");
 const { body, validationResult } = require("express-validator");
 let router = Router();
-let d3 = require("d3");
 const {
   getnumberofbuyers, getcropbyname,
   getnumberoffarmers,
